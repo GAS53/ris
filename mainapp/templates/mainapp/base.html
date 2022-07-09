@@ -2,6 +2,7 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -13,11 +14,13 @@
 </head>
 
 <body>
-    {% include 'mainapp/overall/head.html' %}
-    {% block content %}
-    <p>Пустой блок из Base</p>
-    {% endblock content %}
-    {% include 'mainapp/overall/tail.html' %}
+    <div>
+        {% include 'mainapp/overall/head.html' %}
+        {% block content %}
+        <p>Пустой блок из Base</p>
+        {% endblock content %}
+        {% include 'mainapp/overall/tail.html' %}
+    </div>
 </body>
 
 </html>

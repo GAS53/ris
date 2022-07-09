@@ -15,6 +15,7 @@ SECRET_KEY = 'django-insecure-=jn($v*7y1l16ea9mt$vh!=*z3(y)e!q^1onspd6d#h$jh4roz
 DEBUG = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp.apps.MainappConfig',
     "bootstrap5",
+    'imagekit',
+
 ]
 
 MIDDLEWARE = [
@@ -64,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },

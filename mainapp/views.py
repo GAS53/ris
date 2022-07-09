@@ -1,4 +1,6 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
+from .models import News
+from django.shortcuts import get_object_or_404
 
 
 class IndexTemplateView(TemplateView):
@@ -16,5 +18,17 @@ class ContactsTemplateView(TemplateView):
 class WorksTemplateView(TemplateView):
     template_name = 'mainapp/works.html'
 
-class NewsTemplateView(TemplateView):
+
+
+
+class NewsListTemplateView(ListView):
+    template_name = 'mainapp/news_list.html'
+    model = News
+    paginate_by = 6
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+class NewsTemplateView(DetailView):
+    model = News
     template_name = 'mainapp/news.html'
