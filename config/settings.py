@@ -15,8 +15,8 @@ SECRET_KEY = 'django-insecure-=jn($v*7y1l16ea9mt$vh!=*z3(y)e!q^1onspd6d#h$jh4roz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'medias')
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp.apps.MainappConfig',
     "bootstrap5",
-    'authapp.apps.AuthappConfig'
+    'authapp.apps.AuthappConfig',
 
 
 ]
@@ -61,7 +61,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

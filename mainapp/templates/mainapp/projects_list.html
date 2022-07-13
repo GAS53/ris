@@ -38,17 +38,15 @@
                     <p class="card-text mb-auto">{{ project.mini_description }}</p>
                     <p>{{ project.pk }}</p>
                     <p>{{ one_photo }}</p>
+                    <p>{{ MEDIA_URL }}{{ one_photo }}</p>
 
 
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img src="{{ one_photo }}" alt="">
-                    <svg class="bd-placeholder-img" width="200" height="250" role="img"
-                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
 
-
-                    </svg>
+                    <img class="bd-placeholder-img" width="200" height="250" role="img"
+                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"
+                        src="{{ MEDIA_URL }}{{ one_photo }}" class="img-thumbnail" alt="...">
 
                 </div>
             </div>
