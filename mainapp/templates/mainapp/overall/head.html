@@ -18,21 +18,28 @@
                     {% if now_page in 'mainapp:index' %} active {% endif %}" aria-current="page">Главная</a>
             </li>
             <li class="nav-item"><a href="{% url 'mainapp:news_list' %}" class="nav-link
-                            {% if now_page in 'mainapp:news' %} active {% endif %}">Новости</a></li>
-            <li class="nav-item"><a href="{% url 'mainapp:we' %}" class="nav-link
-                {% if now_page in 'mainapp:we' %} active {% endif %}">О
-                    Нас</a></li>
-            <li class="nav-item"><a href="{% url 'mainapp:galery' %}"
-                    class="nav-link {% if now_page in 'mainapp:galery' %} active {% endif %}">Галерея
+                            {% if now_page in 'mainapp:news_list' %} active {% endif %}">Новости</a></li>
+
+            <li class="nav-item"><a href="{% url 'mainapp:projects_list' %}"
+                    class="nav-link {% if now_page in 'mainapp:projects_list' %} active {% endif %}">Галерея
                     выполненных проектов</a>
             </li>
             <li class="nav-item"><a href="{% url 'mainapp:works' %}"
                     class="nav-link {% if now_page in 'mainapp:works' %} active {% endif %}">Выполняемые
                     работы</a></li>
+            <li class="nav-item"><a href="{% url 'mainapp:feedback_list' %}" class="nav-link
+                            {% if now_page in 'mainapp:feedback_list' %} active {% endif %}">Отзывы</a></li>
             <li class="nav-item"><a href="{% url 'mainapp:contacts' %}"
                     class="nav-link {% if now_page in 'mainapp:contacts' %} active {% endif %}">Контакты</a>
             </li>
+
+
         </ul>
+        {% if user.is_staff %}
+        <p>Вы зашли как администратор {{ user.username }}</p> <br>
+        <a href="{% url 'mainapp:news_create' %}">ADMIN</a>
+
+        {% endif %}
     </header>
 </div>
 {% endwith %}

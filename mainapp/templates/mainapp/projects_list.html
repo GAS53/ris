@@ -1,0 +1,81 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main class="container">
+    <div class="p-4 p-md-2 mb-2 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 fst-italic">Наши проекты</h1>
+            <p class="lead my-2">Этап завершения работ определяется заказчиком.</p>
+        </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-around">
+        <button name="brick" type="button" class="btn btn-primary active btn-lg">Дома из кирпича</button>
+        <button name="blocks" type="button" class="btn btn-secondary active btn-lg">Каркасные дома</button>
+        <button name="frame" type="button" class="btn btn-secondary btn-lg">Дома из блоков
+            (Газобетон/Керамоблоки)</button>
+    </div>
+    <br><br>
+    <div class="row mb-2">
+        {% for project, photos, one_photo in object_list %}
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">
+                        {% if project.house_type in 'bl' %}
+                        Дом из блоков
+                        {% elif project.house_type in 'br' %}
+                        Дом из кирпича
+                        {% else %}
+                        Каркасный дом
+                        {% endif %}
+                    </strong>
+                    <h3 class="mb-0">{{ project.mini_description }}</h3>
+                    {% if project.stop_date != None %}
+                    <div class="mb-1 text-muted">Завершен {{ project.stop_date|date }}</div>
+                    {% endif %}
+                    <p class="card-text mb-auto">{{ project.mini_description }}</p>
+                    <p>{{ project.pk }}</p>
+                    <p>{{ one_photo }}</p>
+
+
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="{{ one_photo }}" alt="">
+                    <svg class="bd-placeholder-img" width="200" height="250" role="img"
+                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+
+
+                    </svg>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+
+    </div>
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% include 'mainapp/overall/paginator.html' %}
+{% endblock content %}

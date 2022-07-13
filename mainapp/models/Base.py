@@ -1,7 +1,29 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as gl
 
-class Base_work(models.Model):
+class BaseManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+    def delete(self, *args):
+        self.deleted = True
+        self.save()
+
+class SuperBase(models.Model):
+    objects = BaseManager()
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Создана", editable=False)
+    deleted = models.BooleanField(default=False, verbose_name='удалена(помечена удаленной)')
+
+    class Meta:
+        abstract = True
+
+    def delete(self, *args):
+        self.deleted = True
+        self.save()
+  
+
+class Base_work(SuperBase):
     GEO = 'ge'
     PRE = 'pr'
     EAR = 'ea'
@@ -25,14 +47,14 @@ class Base_work(models.Model):
         (LOW_POWER, 'Слаботочные'),
     ]
     
-    rubric = models.SmallIntegerField(choices=works, default=PRE, verbose_name='Вид работ')
+    work_type = models.CharField(verbose_name='Вид работ', max_length=2 ,choices=works, default=PRE)
     
 
     class Meta:
         abstract = True
         
 
-class Base_matherials(models.Model):
+class Base_matherials(SuperBase):
     BRICK = 'br'  # кирпич
     BLOCKS = 'bl'
     FRAME = 'fr'  # каркас
@@ -41,7 +63,7 @@ class Base_matherials(models.Model):
         (BLOCKS, 'Блоки'),
         (FRAME, 'Каркас'),
     ]
-    name = models.CharField(verbose_name='Тип постройки', max_length=2, choices=matherials, default=BRICK)
+    house_type = models.CharField(verbose_name='Тип постройки', max_length=2, choices=matherials, default=BRICK)
     
     class Meta:
         abstract = True

@@ -1,15 +1,18 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as gl
 
-from mainapp.models.Base import Base_work
+from mainapp.models.Base import SuperBase
 
 class NewsManager(models.Manager):
 
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
 
+    def delete(self):
+        self.deleted = True
+        self.save()
 
-class News(Base_work):
+class News(SuperBase):
     objects = NewsManager()
     title = models.CharField(max_length=128, verbose_name='Заголовок')
     

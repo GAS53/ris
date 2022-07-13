@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,9 +14,9 @@ SECRET_KEY = 'django-insecure-=jn($v*7y1l16ea9mt$vh!=*z3(y)e!q^1onspd6d#h$jh4roz
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp.apps.MainappConfig',
     "bootstrap5",
-    'imagekit',
+    'authapp.apps.AuthappConfig'
+
 
 ]
 
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['*'],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media'
+                
             ],
         },
     },
@@ -118,12 +121,14 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = "authapp.User"
+from django.urls import reverse_lazy
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = reverse_lazy('mainapp:works')
+PASSWORD_RESET_TIMEOUT_DAYS = 2
