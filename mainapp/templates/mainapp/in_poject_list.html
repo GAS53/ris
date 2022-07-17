@@ -1,0 +1,31 @@
+ <div class="row mb-2">
+        {% for project, photos, one_photo in object_list %}
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">
+                        <p>{{ project.get_house_type_display }}</p>
+                    </strong>
+                    <p>{{ work_is }}</p>
+                    <h3 class="mb-0">{{ project.mini_description }}</h3>
+                    {% if project.stop_date != None %}
+                    <div class="mb-1 text-muted">Завершен {{ project.stop_date|date }}</div>
+                    {% endif %}
+                    <div class="container" style="width: 200px; height:150px; word-wrap: break-word;">
+                        <p class="card-text mb-auto">{{ project.mini_description }}</p>
+                    </div>
+
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src='{{ one_photo}}' class="bd-placeholder-img" width="200" height="250" role="img"
+                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"
+                        alt="Проект № {{ project.pk }}">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+
+    </div>

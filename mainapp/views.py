@@ -24,20 +24,13 @@ class ContactsTemplateView(TemplateView):
     template_name = 'mainapp/contacts.html'
 
 
-class NewsCreateView(PermissionRequiredMixin, CreateView):
-    template_name = 'mainapp/news_create.html'
-    model = News.News
-    fields = "__all__"
-    success_url = reverse_lazy("mainapp:news_list")
-
 
 class NewsListListView(ListView):
     template_name = 'mainapp/news_list.html'
-    model = Images.Image
+    model = News.News
     paginate_by = 6
 
     def get_queryset(self):
-        all = Images.Image.objects.all#
         return super().get_queryset().filter(deleted=False)
 
 
@@ -46,43 +39,37 @@ class NewsDetailView(DetailView):
     model = News.News
 
 
-class NewsUpdateView(PermissionRequiredMixin, UpdateView):
-    template_name = 'mainapp/news_update.html'
-    model = News.News
-    fields = "__all__"
-    success_url = reverse_lazy("mainapp:news_list")
 
 
-class NewsDeleteView(PermissionRequiredMixin, DeleteView):
-    template_name = 'mainapp/news_delete.html'
-    model = News.News
-    success_url = reverse_lazy("mainapp:news_list")
-    permission_required = ("mainapp.news_delete",)
 
-
-class ProjectCreateView(PermissionRequiredMixin, CreateView):
-    template_name = 'mainapp/project_create.html'
-    model = Project.Project
-    fields = "__all__"
-    success_url = reverse_lazy("mainapp:projects_list")
-    permission_required = ("mainapp.project_create",)
-
-
-class ProjectListListView(ListView):
+class ProjectListView(ListView):
     template_name = 'mainapp/projects_list.html'
     model = Project.Project
     paginate_by = 6
 
-    def get_queryset(self):
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(num=num, **kwargs)
+    #     self.num = context['num']
+    #     return context
+# здесь нужно разобраться как получить из html num который будет по умолчанию
+# 'all' или 'br' bl fr для различных типов домов и возвращать исходя из этого
+# get_queryset
+
+    def get_queryset(self, **kwargs):
+        relation = self.request.GET.get('relation', None)
+        print(relation)
         main_li = []
         for project in Project.Project.objects.all().filter(deleted=False):
-            fotos_object = Images.Image.objects.filter(project=project.pk)
-            photos = []
-            for foto in fotos_object.all():
-                photos.append(foto.path.url)
-            one_photo = choice(photos) if len(photos)>0 else '/media/images/one_for_all.jpg'
-            main_li.append((project, photos, one_photo))
+            if project.house_type == relation or relation == 'all':
+                fotos_object = Images.Image.objects.filter(project=project.pk)
+                photos = []
+                for foto in fotos_object.all():
+                    photos.append(foto.image.url)
+                one_photo = choice(photos) if len(photos)>0 else '/media/images/one_for_all.jpg'
+                main_li.append((project, photos, one_photo))
         return main_li
+
+
 
 
 class ProjectDetailView(DetailView):
@@ -90,46 +77,6 @@ class ProjectDetailView(DetailView):
     model = Project.Project
 
 
-class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
-    template_name = 'mainapp/project_update.html'
-    model = Project.Project
-    fields = "__all__"
-    permission_required = ("mainapp.project_update",)
-
-    def get_success_url(self):
-        return reverse_lazy("mainapp:project_update", args=[self.request.user.pk])
-
-
-
-class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
-    template_name = 'mainapp/project_delete.html'
-    model = Project.Project
-    success_url = reverse_lazy("mainapp:project_delete")
-    permission_required = ("mainapp.project_delete",)
-
-
-
-class ImagesCreateView(PermissionRequiredMixin, CreateView):
-    template_name = 'mainapp/image_create.html'
-    model = Images.Image
-    fields = "__all__"
-    success_url = reverse_lazy("mainapp:image_create")
-    permission_required = ("mainapp.image_create",)
-
-
-class ImagesDeleteView(PermissionRequiredMixin, DeleteView):
-    template_name = 'mainapp/image_delete.html'
-    model = Images.Image
-    success_url = reverse_lazy("mainapp:image_delete")
-    permission_required = ("mainapp.image_delete",)
-
-
-class FeedbackCreateView(PermissionRequiredMixin, CreateView):
-    template_name = 'mainapp/feedback_create.html'
-    model = Feedback.FeedabckModel
-    fields = "__all__"
-    success_url = reverse_lazy("mainapp:feedback_create")
-    permission_required = ("mainapp.feedback_create",)
 
    
 class FeedbackListListView(ListView):
@@ -141,27 +88,3 @@ class FeedbackListListView(ListView):
         return super().get_queryset().filter(deleted=False)
     
     
-class FeedbackUpdateView(PermissionRequiredMixin, UpdateView):
-    template_name = 'mainapp/feedback_update.html'
-    model = Feedback.FeedabckModel
-    fields = "__all__"
-    permission_required = ("mainapp.feedback_update",)
-
-    def get_success_url(self):
-        return reverse_lazy("mainapp:feedback_update", args=[self.request.user.pk])
-
-
-class FeedbackDeleteView(PermissionRequiredMixin, DeleteView):
-    template_name = 'mainapp/feedback_delete.html'
-    model = Feedback.FeedabckModel
-    success_url = reverse_lazy("mainapp:feedback_delete")
-    permission_required = ("mainapp.feedback_delete",)
-
-
-
-
-
-
-class AdminNews(TemplateView):
-    template_name = 'admin/mainapp/news/'
-

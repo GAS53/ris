@@ -14,20 +14,26 @@ SECRET_KEY = 'django-insecure-=jn($v*7y1l16ea9mt$vh!=*z3(y)e!q^1onspd6d#h$jh4roz
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'medias')
+
+
+
+
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
-    STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
     STATICFILES_DIRS = [
-        STATIC_DIR,
-        ]
+        BASE_DIR/ 'static',
+    ]
 
 
 else:
     ALLOWED_HOSTS = ['192.168.2.64'] # изменить
+    STATIC_ROOT = "/var/www/example.com/static/" # изменить
 
 
 # Application definition
@@ -42,6 +48,9 @@ INSTALLED_APPS = [
     'mainapp.apps.MainappConfig',
     "bootstrap5",
     'authapp.apps.AuthappConfig',
+    'imagekit',
+
+
 
 
 ]
@@ -70,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media'
+
                 
             ],
         },
@@ -130,5 +140,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "authapp.User"
 from django.urls import reverse_lazy
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = reverse_lazy('mainapp:works')
+LOGIN_URL = reverse_lazy('mainapp:index')
 PASSWORD_RESET_TIMEOUT_DAYS = 2
+

@@ -20,7 +20,7 @@
             <li class="nav-item"><a href="{% url 'mainapp:news_list' %}" class="nav-link
                             {% if now_page in 'mainapp:news_list' %} active {% endif %}">Новости</a></li>
 
-            <li class="nav-item"><a href="{% url 'mainapp:projects_list' %}"
+            <li class="nav-item"><a href="{% url 'mainapp:projects_list'  %}" value="all"
                     class="nav-link {% if now_page in 'mainapp:projects_list' %} active {% endif %}">Галерея
                     выполненных проектов</a>
             </li>
@@ -32,14 +32,18 @@
             <li class="nav-item"><a href="{% url 'mainapp:contacts' %}"
                     class="nav-link {% if now_page in 'mainapp:contacts' %} active {% endif %}">Контакты</a>
             </li>
+            <li>
+                {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}">Администрироване</a>
+                {% endif %}
+            </li>
+
 
 
         </ul>
-        {% if user.is_staff %}
-        <p>Вы зашли как администратор {{ user.username }}</p> <br>
-        <a href="{% url 'mainapp:news_create' %}">ADMIN</a>
 
-        {% endif %}
+
+
     </header>
 </div>
 {% endwith %}

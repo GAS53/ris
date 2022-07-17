@@ -9,12 +9,12 @@ from authapp.forms import UserForm
 
 class LoginView(LoginView):
     template_name = 'authapp/login.html'
-    success_url = reverse_lazy('mainapp:works')
+    success_url = reverse_lazy('mainapp:index')
     
 
     def form_valid(self, form):
         # можно вставить сюда сообщения
-        return HttpResponseRedirect(reverse_lazy("mainapp:works"))
+        return HttpResponseRedirect(reverse_lazy("mainapp:crud"))
 
     def form_invalid(self, form):
         # можно вставить сюда сообщения

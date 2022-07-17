@@ -16,13 +16,12 @@
             <div class="card shadow-sm">
 
                 <a style="text-decoration: none; " href="{% url 'mainapp:news_list' %}">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
-                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <image xlink:href="{% static 'pictures/news_list/AM4.jpg' %}" width="100%" height="100%"
-                            preserveAspectRatio="xMidYMin slice"></image>
-                    </svg>
+                    <img src='{{ news.mini_thumbnail_wm.url}}' class="bd-placeholder-img card-img-top" width="100%"
+                        height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                        focusable="false">
 
                     <div class="card-body">
+                        <p>{{ news.mini_thumbnail_wm.url}}</p>
                         <h4>{{ news.title }}</h4>
                         <p class="card-text">{{ news.preamble }}</p>
                         <div class="d-flex justify-content-between align-items-center">
