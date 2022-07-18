@@ -12,21 +12,22 @@
             <p class="lead my-2">Этап завершения работ определяется заказчиком.</p>
         </div>
     </div>
-    <th colspan="4">
+
+
+
+<th colspan="4">
         <form action="{% url 'mainapp:projects_list' %}" method="GET">
-            <label>Выбрать определенный тип основного материала дома:
-                <select name="relation">
-                    <option value="all">Все типы</option>
-                    <option value="br">Дома из кирпича</option>
-                    <option value="bl">Дома из блоков</option>
-                    <option value="fr">Каркасные дома</option>
-                </select>
-            </label>
-            <input type="submit" value="Показать">
+        <label>Показать определенный тип домов
+            <select name="related">
+            <option value="all">Все типы домов</option>
+            <option value="br">Дома из кирпича</option>
+            <option value="bl">Дома из блоков(газоплоки/керамоблоки)</option>
+            <option value="fr">Каркасные дома</option>
+            </select>
+        </label>
+        <input type="submit" value="Показать">
         </form>
-    </th>
-
-
+        </th>
 
 
 

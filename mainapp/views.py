@@ -3,6 +3,9 @@ from django.shortcuts import get_object_or_404
 from random import choice
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
+import urllib
+
+
 
 from .models import News, Images, Project, Feedback
 
@@ -47,17 +50,11 @@ class ProjectListView(ListView):
     model = Project.Project
     paginate_by = 6
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(num=num, **kwargs)
-    #     self.num = context['num']
-    #     return context
-# здесь нужно разобраться как получить из html num который будет по умолчанию
-# 'all' или 'br' bl fr для различных типов домов и возвращать исходя из этого
-# get_queryset
 
     def get_queryset(self, **kwargs):
-        relation = self.request.GET.get('relation', None)
+        relation = self.request.GET.get('related', None)
         print(relation)
+        print(kwargs)
         main_li = []
         for project in Project.Project.objects.all().filter(deleted=False):
             if project.house_type == relation or relation == 'all':

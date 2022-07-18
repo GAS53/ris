@@ -20,7 +20,7 @@
             <li class="nav-item"><a href="{% url 'mainapp:news_list' %}" class="nav-link
                             {% if now_page in 'mainapp:news_list' %} active {% endif %}">Новости</a></li>
 
-            <li class="nav-item"><a href="{% url 'mainapp:projects_list'  %}" value="all"
+            <li class="nav-item"><a href="{% url 'mainapp:projects_list' %}"
                     class="nav-link {% if now_page in 'mainapp:projects_list' %} active {% endif %}">Галерея
                     выполненных проектов</a>
             </li>
