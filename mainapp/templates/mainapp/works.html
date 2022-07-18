@@ -1,5 +1,70 @@
 {% extends 'mainapp/base.html' %}
 
 {% block content %}
-<p>работы</p>
+<div class="vstack gap-3">
+  <div class="bg-light border">First item</div>
+  <div class="bg-light border">Second item</div>
+  <div class="bg-light border">Third item</div>
+</div>
+
+{% for type_it, pictures_li in di_types.items():
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+
+  <div class="carousel-inner">
+     {% for picture in pictures_li %}
+        {% if forloop.first %}
+        <div class="carousel-item active">
+          <img src="{{ picture.main_thumbnail_wm.url }}" class="d-block w-100" alt="...">
+        </div>
+        {% elif %}
+        <div class="carousel-item">
+          <img src="{{ picture.main_thumbnail_wm.url }}" class="d-block w-100" alt="...">
+        </div>
+        {% endif %}
+
+    {% endfor %}
+  </div>
+
+</div>
+
+
+{% endfor %}
+
+
+
+
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock content %}

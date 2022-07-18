@@ -21,9 +21,8 @@
                         focusable="false">
 
                     <div class="card-body">
-                        <p>{{ news.mini_thumbnail_wm.url}}</p>
                         <h4>{{ news.title }}</h4>
-                        <p class="card-text">{{ news.preamble }}</p>
+                        <p class="card-text text-truncate" style="max-width: 150px;" >{{ news.preamble }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">{{ news.created }}</small>
                         </div>

@@ -8,19 +8,40 @@ import urllib
 
 
 from .models import News, Images, Project, Feedback
-
+from random import choices
 
 class IndexTemplateView(TemplateView):
     template_name = 'mainapp/index.html'
 
-class WorksTemplateView(ListView): 
+PICTURES_DICT = {}
+
+def get_full_images_di():
+    for image in Images.Image.objects.all():
+        if PICTURES_DICT.get(image.work_type):
+            PICTURES_DICT[image.work_type].append(image)
+        else:
+            li = []
+            li.append(image.image)
+            PICTURES_DICT[image.work_type] = li
+
+def get_mini_di():
+    mini_di = {}
+    for typ, li_pictures in PICTURES_DICT.items():
+        k = 3 if len(li_pictures) > 3 else len(li_pictures)
+        mini_di[typ] = choices(li_pictures, k=k)
+    return mini_di
+
+class WorksTemplateView(TemplateView):
     template_name = 'mainapp/works.html'
-    model = Images.Image
+
+    def get_context_data(self, **kwargs):
+        context = super(WorksTemplateView, self).get_context_data()
+        if PICTURES_DICT == {}:
+            get_full_images_di()
+        context['di_types'] = get_mini_di()
+        return context
 
 
-    def get_queryset(self):
-
-        return super().get_queryset().filter(deleted=False)
 
 
 class ContactsTemplateView(TemplateView):
@@ -52,9 +73,7 @@ class ProjectListView(ListView):
 
 
     def get_queryset(self, **kwargs):
-        relation = self.request.GET.get('related', None)
-        print(relation)
-        print(kwargs)
+        relation = self.request.GET.get('related', 'all')
         main_li = []
         for project in Project.Project.objects.all().filter(deleted=False):
             if project.house_type == relation or relation == 'all':
@@ -62,7 +81,7 @@ class ProjectListView(ListView):
                 photos = []
                 for foto in fotos_object.all():
                     photos.append(foto.image.url)
-                one_photo = choice(photos) if len(photos)>0 else '/media/images/one_for_all.jpg'
+                one_photo = choice(photos) if len(photos) > 0 else '/media/images/one_for_all.jpg'
                 main_li.append((project, photos, one_photo))
         return main_li
 
