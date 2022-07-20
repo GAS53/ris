@@ -18,11 +18,12 @@ PICTURES_DICT = {}
 def get_full_images_di():
     for image in Images.Image.objects.all():
         if PICTURES_DICT.get(image.work_type):
-            PICTURES_DICT[image.work_type].append(image)
+            PICTURES_DICT[image.get_work_type_display()].append(image)
         else:
             li = []
-            li.append(image.image)
-            PICTURES_DICT[image.work_type] = li
+            li.append(image)
+            PICTURES_DICT[image.get_work_type_display()] = li
+    print(PICTURES_DICT)
 
 def get_mini_di():
     mini_di = {}
@@ -92,6 +93,14 @@ class ProjectDetailView(DetailView):
     template_name = 'mainapp/project.html'
     model = Project.Project
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetailView, self).get_context_data()
+        li = []
+        for image in Images.Image.objects.all():
+            if image.project.pk == self.kwargs.get('pk'):
+                li.append(image)
+        context['li'] = li
+        return context
 
 
    

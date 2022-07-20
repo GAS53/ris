@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as gl
 
 class BaseManager(models.Manager):
 
@@ -10,9 +9,13 @@ class BaseManager(models.Manager):
         self.deleted = True
         self.save()
 
+
+
+
 class SuperBase(models.Model):
     objects = BaseManager()
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создана", editable=False)
+    updated = models.DateTimeField(auto_now=True, verbose_name="Корректирована")
     deleted = models.BooleanField(default=False, verbose_name='удалена(помечена удаленной)')
 
     class Meta:
@@ -23,47 +26,12 @@ class SuperBase(models.Model):
         self.save()
   
 
-class Base_work(SuperBase):
-    GEO = 'ge'
-    PRE = 'pr'
-    EAR = 'ea'
-    STONY = 'st'
-    CONCRETE = 'co'
-    FITTER = 'fi'
-    HEALING = 'he'
-    FINISHING = 'fi'
-    ISOLATIG = 'is'
-    LOW_POWER = 'lo'
-    works = [
-        (GEO, 'Геодезические'),
-        (PRE, 'Подготовительные'),
-        (EAR, 'Земляные'),
-        (STONY, 'Каменные'),
-        (CONCRETE, 'Бетонные/железобетонные'),
-        (FITTER, 'Монтажные'),
-        (HEALING, 'Кровельные'),
-        (FINISHING, 'Отделочные'),
-        (ISOLATIG, 'Изоляционные'),
-        (LOW_POWER, 'Слаботочные'),
-    ]
-    
-    work_type = models.CharField(verbose_name='Вид работ', max_length=2 ,choices=works, default=PRE)
-    
+class Base_work(models.Model):
+    work_type = models.CharField(editable=False, verbose_name='Вид работ', max_length=20, default='подготовительные')
 
-    class Meta:
-        abstract = True
-        
+class Base_matherials(models.Model):
+    matherials_type = models.CharField(editable=False, verbose_name='Тип постройки', max_length=20, default='кирпич')
 
-class Base_matherials(SuperBase):
-    BRICK = 'br'  # кирпич
-    BLOCKS = 'bl'
-    FRAME = 'fr'  # каркас
-    matherials = [
-        (BRICK, 'Кирпич'),
-        (BLOCKS, 'Блоки'),
-        (FRAME, 'Каркас'),
-    ]
-    house_type = models.CharField(verbose_name='Тип постройки', max_length=2, choices=matherials, default=BRICK)
-    
-    class Meta:
-        abstract = True
+class Base_bad(models.Model):
+    bad_type = models.CharField(editable=False, verbose_name='Тип фундамента', max_length=20, default='ленточный')
+

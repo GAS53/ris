@@ -1,5 +1,55 @@
 {% extends 'mainapp/base.html' %}
 
 {% block content %}
-<p>Одна новость</p>
+<div class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+      <h1 class="display-4 fw-bold lh-1">{{ object.title }}</h1>
+      <p class="lead">{{ object.body }}</p>
+
+    </div>
+    <div style="width:400px;display:block;">
+      <div id="slider2">
+        <div class="thumbelina-but vert top disabled">˄</div>
+        <div style="position:absolute;overflow:hidden;width:100%;height:100%;">
+          <ul class="thumbelina" style="top: 0px;">
+            {% for image in li %}
+            <li style="display: block;">
+
+              <img class="cloudzoom-gallery cloudzoom-gallery-active" src="{{ image.main_thumbnail_wm.url }}"
+                data-cloudzoom="
+                         useZoom: '#zoom1',
+                         image:'{{ image.mini_thumbnail_wm.url }}',
+                         zoomImage:'{{ image.main_thumbnail_wm.url }}'
+                         ">
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div id="fwd3" class="thumbelina-but vert bottom">˅</div>
+      </div>
+
+      <div style="margin-left:10px;line-height:0;display:inline-block;">
+        <img class="cloudzoom" alt="Thumbelina Zoom Image" id="zoom1" src="{{ image.mini_thumbnail_wm.url }}"
+          data-cloudzoom="
+                 zoomImage:&quot;/sites/starplugins/images/jetzoom/large/image1.jpg&quot;,
+                 zoomPosition: &quot;inside&quot;,
+                 zoomOffsetX: 0,
+                 zoomFlyOut: false,
+                 maxMagnification: 4" style="user-select: none;" height="370">
+      </div>
+    </div>
+
+
+    <!-- 
+    <div style="position:relative;overflow:hidden;">
+      <script type="text/javascript" charset="utf-8" async src="{{ object.map_mark }}"></script>
+    </div> -->
+
+  </div>
+  <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+    <img class="rounded-lg-3" src="bootstrap-docs.png" alt="" width="720">
+  </div>
+</div>
+</div>
 {% endblock content %}

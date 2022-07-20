@@ -1,17 +1,22 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as gl
 
-from mainapp.models.Base import Base_matherials
+from mainapp.models import Base
 
 
-
-class Project(Base_matherials):
-    mini_description = models.CharField(verbose_name='Краткое описание', max_length=100)
-    full_description = models.CharField(verbose_name='Полное описание проекта', max_length=1000)
-    map_mark = models.CharField(default='Владелец не захотел указывть расположение обьекта', verbose_name='Расположение объекта', max_length=150)
+class Project(Base.SuperBase):
+    title = models.CharField(verbose_name='Заголовок', max_length=100, default='Null')
+    body = models.CharField(verbose_name='Описание проекта', max_length=1000, default='Null')
+    map = models.CharField(default='Null', verbose_name='Расположение объекта(вставляем после  src="..."', max_length=1000)
     start_date = models.DateField(verbose_name="Дата начала строительства")
     stop_date = models.DateField(verbose_name="Дата окончания строительства", blank=True, null=True)
-    
+    house_area = models.PositiveSmallIntegerField(verbose_name='Площадь дома')
+
+    works = models.ManyToManyField(Base.Base_work)
+    material = models.ForeignKey(Base.Base_matherials, on_delete=models.DO_NOTHING)
+    bad = models.ForeignKey(Base.Base_bad, on_delete=models.DO_NOTHING)
+
+
 
     class Meta:
         verbose_name = gl("Проект")
@@ -20,4 +25,4 @@ class Project(Base_matherials):
 
 
     def __str__(self) -> str:
-        return f'{self.pk} {self.mini_description}'
+        return f'{self.pk} {self.title}'
