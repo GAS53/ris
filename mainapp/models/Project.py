@@ -12,9 +12,9 @@ class Project(Base.SuperBase):
     stop_date = models.DateField(verbose_name="Дата окончания строительства", blank=True, null=True)
     house_area = models.PositiveSmallIntegerField(verbose_name='Площадь дома')
 
-    works = models.ManyToManyField(Base.Base_work)
-    material = models.ForeignKey(Base.Base_matherials, on_delete=models.DO_NOTHING)
-    bad = models.ForeignKey(Base.Base_bad, on_delete=models.DO_NOTHING)
+    works = models.ManyToManyField(Base.Base_work, verbose_name='Типы выполненных работ')
+    material = models.ForeignKey(Base.Base_matherials, on_delete=models.DO_NOTHING, verbose_name='Основной материал стен')
+    bad = models.ForeignKey(Base.Base_bad, on_delete=models.DO_NOTHING, verbose_name='Тип фундамента')
 
 
 

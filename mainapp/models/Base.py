@@ -21,11 +21,6 @@ class SuperBase(models.Model):
     class Meta:
         abstract = True
 
-    def delete(self, *args):
-        self.deleted = True
-        self.save()
-  
-
 class Base_work(models.Model):
     work_type = models.CharField(editable=False, verbose_name='Вид работ', max_length=20, default='подготовительные')
 
