@@ -1,10 +1,11 @@
 import os
+from urllib.request import CacheFTPHandler
 from django.urls import reverse_lazy
 
 def get_secret(settings):
     try:
         return os.environ[settings]
-    except KeyError as key_e:
+    except ValueError as key_e:
         key_e(f'В окружении нет такой переменной {settings}')
 
 
@@ -27,8 +28,10 @@ if DEBUG:
         }
     }
     
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    EMAIL_HOST = "localhost"
+    INTERNAL_IPS = ["127.0.0.1",]
+
+    # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    # EMAIL_HOST = "localhost"
 
 else:
     ALLOWED_HOSTS = ['192.168.2.64']
@@ -44,19 +47,32 @@ else:
     }
     
     
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.mail.ru'
-    EMAIL_PORT =  465
-    EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_SSL = True
-    EMAIL_USE_TLS = False
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT =  465
+EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
 
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    CONN_MAX_AGE = 60
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CONN_MAX_AGE = 60
 
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": get_secret('REDIS_PASSWORD')
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 
 
@@ -104,6 +120,7 @@ INSTALLED_APPS = [
     "bootstrap5",
     'authapp.apps.AuthappConfig',
     'imagekit',
+    "debug_toolbar",
 
 
 
@@ -111,6 +128,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -153,4 +171,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "authapp.User"
 LOGOUT_REDIRECT_URL = '/'
 
+CACHE_TIME = 300
 
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"

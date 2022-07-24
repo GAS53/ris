@@ -18,7 +18,7 @@ def timit(title):
 
 @timit('работ')
 def fill_base_works():
-    works = ['Геодезические', 'Подготовительные', 'Земляные', 'Каменные', 'Бетонные/железобетонные', 'Монтажные',
+    works = ['не выбран', 'Геодезические', 'Подготовительные', 'Земляные', 'Каменные', 'Бетонные/железобетонные', 'Монтажные',
              'Кровельные', 'Отделочные', 'Изоляционные', 'Слаботочные']
     li = []
     for work in works:
@@ -29,7 +29,7 @@ def fill_base_works():
 
 @timit('материалов')
 def fill_base_materials():
-    materials = ['Кирпич', 'Блоки', 'Каркас']
+    materials = ['не выбран', 'Кирпич', 'Блоки', 'Каркас']
     li = []
     for mat in materials:
         li.append(Base.Base_matherials(matherials_type=mat))
@@ -66,9 +66,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fill_base_works()
         fill_base_materials()
-        fill_base_bad()
-        fill_news(20)
-        create_superuser('test')
+        # fill_base_bad()
+        # fill_news(20)
+        # create_superuser('test')
 
 
 

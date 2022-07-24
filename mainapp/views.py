@@ -1,17 +1,19 @@
-from django.views.generic import TemplateView, DeleteView, UpdateView, ListView, DetailView, CreateView
+from tkinter import N
+from django.forms import modelform_factory
+from django.views.generic import TemplateView, FormView, DeleteView, UpdateView, ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404
 from random import choice
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
-import urllib
-
+from mainapp.forms import Email_me_Form
+from django.core.mail import send_mail
+from mainapp.tasks import preparate_and_send_email
 
 
 from .models import News, Images, Project, Feedback
 from random import choices
 
-class IndexTemplateView(TemplateView):
-    template_name = 'mainapp/index.html'
+
 
 PICTURES_DICT = {}
 
@@ -41,6 +43,38 @@ class WorksTemplateView(TemplateView):
             get_full_images_di()
         context['di_types'] = get_mini_di()
         return context
+
+
+
+
+
+
+
+
+
+
+
+class IndexTemplateView(FormView):
+    template_name = 'mainapp/index.html'
+    success_url = reverse_lazy('mainapp:index')
+
+    form_class = Email_me_Form
+
+    def form_valid(self, form):
+        # print(Post.objects.create(**form.cleaned_data))
+        print(f'send email {form.cleaned_data}')
+        try:
+            preparate_and_send_email(form.cleaned_data)
+        except Exception as e:
+            print(f'Mail exception {e}')
+        return super().form_valid(form)
+
+
+
+
+
+
+    
 
 
 
