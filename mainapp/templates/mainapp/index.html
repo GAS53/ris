@@ -9,15 +9,8 @@
             выполненных проектов</a>, так же вы можете посмотреть отдельно <a href="{% url 'mainapp:works' %}"> виды
             выполняемых нами работ</a> </p>
     <p>Любые вопросы вы можете написать на и мы ответим вам на Email</p>
-    <form method="POST">
 
-        {% csrf_token %}
-        {% for f in form %}
-        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-        <div class="form-error">{{ f.errors }}</div>
-        {% endfor %}
-        <input type="submit" value="отправить">
-    </form>
+    {% include "mainapp/index_email_form.html" %}
 
 </div>
 

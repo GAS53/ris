@@ -1,0 +1,54 @@
+<form method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">{{ form.email.label }}</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="test@mail.ru">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">{{ form.name.label }}</label>
+            <input type="text" class="form-control" id="inputPassword4" placeholder="Имя">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputAddress">{{ form.question.label }}</label>
+        <input type="text" class="form-control" id="inputAddress">
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputState">{{ form.work_type.label }}</label>
+            <select id="inputState" class="form-control">
+                {% for type in form.work_type %}
+                <option {% if forloop.first %}selected{% endif %}>{{ type }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputState">{{ form.work_type.label }}</label>
+            <select id="inputState" class="form-control">
+                {% for type in form.material_type %}
+                <option {% if forloop.first %}selected{% endif %}>{{ type }}</option>
+                {% endfor %}
+
+            </select>
+
+
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">отправить</button>
+
+</form>
+
+
+<!-- <form method="POST">
+
+    {% csrf_token %}
+    {% for f in form %}
+    <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <input type="submit" value="отправить">
+</form> -->
