@@ -1,62 +1,20 @@
 {% extends 'mainapp/base.html' %}
 
 {% block content %}
-<div>
-    <h1>Здраствуйте</h1>
+<div class="container opacity-75">
+    <h1>Здравствуйте</h1>
     <p>Наша организация занимается строительством и ремонтом домов c 2010 года </p>
     <p>Мы занимаемся полным циклом строительства, а так же можем провести отдельные виды работ на объекте</p>
-    <p>Посмотреть реализованные полностью проекты вы можете в <a href="{% url 'mainapp:projects_list' %}">галерее
-            выполненных проектов</a>, так же вы можете посмотреть отдельно <a href="{% url 'mainapp:works' %}"> виды
-            выполняемых нами работ</a> </p>
-    <p>Любые вопросы вы можете написать на и мы ответим вам на Email</p>
-    <form class="row g-3" method="POST">
-        {% csrf_token %}
-        <div class="col-md-6">
-            <label for='{{ form.email }}' class="form-label">{{ form.email.label }}</label>
-            <input type="email" placeholder="test@mail.ru" class="form-control" name={{ form.email }}>
-        </div>
-        <div class="col-md-6">
-            <label for='{{ form.name }}' class="form-label">{{ form.name.label }}</label>
-            <input type="text" class="form-control" name={{ form.name }}>
-        </div>
+    <p>Посмотреть реализованные полностью проекты вы можете в<a href="{% url 'mainapp:projects_list' %}"><strong>
+                галерее
+                выполненных проектов</strong></a>, так же вы можете посмотреть отдельно <a
+            href="{% url 'mainapp:works' %}"><strong> виды
+                выполняемых нами работ</strong></a> </p>
 
 
-        <div class="col-md-6">
-            <label for="inputState" class="form-label">{{ form.material_type.label }}</label>
-            <select name="inputState" class="form-select">
-                {% for select_it in form.material_type %}
-                <option {% if forloop.first %}selected{% endif %}>{{ select_it }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="inputState" class="form-label">{{ form.work_type.label }}</label>
-            <select name="inputState" class="form-select">
-                {% for select_it in form.work_type %}
-                <option {% if forloop.first %}selected{% endif %}>{{ select_it }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-12">
-            <label for='{{ form.question }}' class="form-label">{{ form.question.label }}</label>
-            <input type="textarea" class="form-control" id="{{ form.question }}">
-        </div>
-
-        <div class="form-error">{{ f.errors }}</div>
-        <div class="col-12">
-            <input type="submit" value="отправить">
-        </div>
-    </form>
+    {% include "mainapp/index_email_form.html" %}
 
 </div>
-<!-- <form method="POST">
 
-    {% csrf_token %}
-    {% for f in form %}
-    <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-    <input type="submit" value="отправить">
-</form> -->
 
 {% endblock content %}

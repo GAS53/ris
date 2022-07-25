@@ -1,0 +1,15 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<div class="container">
+    {% for feed in object_list %}
+    <h3>Отзыв от {{ feed.name_feetbacker }}: {{ feed.title }}</h3>
+    <p>{{ feed.body }}</p>
+    <p>Работы проводимые на объекте</p>
+    {{feed.works }}
+
+
+    {% endfor %}
+</div>
+
+{% endblock content %}
