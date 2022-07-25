@@ -7,7 +7,7 @@ class FeedabckModel(Base.SuperBase):
     title = models.CharField(verbose_name='Заголовок', max_length=100)
     body = models.TextField(verbose_name='Отзыв')
     name_feetbacker = models.CharField(verbose_name='Имя написавшего отзыв', max_length=55)
-    photo_feetbacker = models.ImageField(verbose_name='Фото написавшего отзыв', blank=True, null=True, upload_to='images/feedbackers')
+    photo_feetbacker = models.ImageField(verbose_name='Фото написавшего отзыв', blank=True, null=True, upload_to='media/images/feedbackers')
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING, default=None, verbose_name='Название объекта')
     bad = models.ForeignKey(Base.Base_bad, on_delete=models.DO_NOTHING, verbose_name='Тип фундамента')
     material = models.ForeignKey(Base.Base_matherials, on_delete=models.DO_NOTHING, verbose_name='Основной материал стен')

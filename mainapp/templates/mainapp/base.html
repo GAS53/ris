@@ -14,14 +14,15 @@
 
 </head>
 
-<body class="text-center">
-<div class="container">
-    {% include 'mainapp/overall/head.html' %}
-    {% block content %}
-    <p>Пустой блок из Base</p>
-    {% endblock content %}
-    {% include 'mainapp/overall/tail.html' %}
-</div>
+<body class="text-center text-dark img-responsive" color="#000000" background="{% static 'pictures/main_site.webp' %}"
+    background-size='cover'>
+    <div class="container">
+        {% include 'mainapp/overall/head.html' %}
+        {% block content %}
+        <p>Пустой блок из Base</p>
+        {% endblock content %}
+        {% include 'mainapp/overall/tail.html' %}
+    </div>
 </body>
 
 </html>
