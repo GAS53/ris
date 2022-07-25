@@ -172,6 +172,7 @@ AUTH_USER_MODEL = "authapp.User"
 LOGOUT_REDIRECT_URL = '/'
 
 CACHE_TIME = 300
+IS_CACHED = False
 
 
 CELERY_BROKER_URL = "redis://localhost:6379"

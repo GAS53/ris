@@ -25,9 +25,9 @@ class ImagesForm(forms.ModelForm):
 
 
 class Email_me_Form(forms.Form):
-    email = forms.EmailField(label='Email')
-    name = forms.CharField(max_length=70)
-    question = forms.CharField(label='Сообщение', max_length=1000)
+    email = forms.EmailField(label='Электронная почта для обратной связи')
+    name = forms.CharField(max_length=70, label='ФИО')
+    question = forms.CharField(label='Ваши вопросы для нас', max_length=1000)
     work_type = forms.ModelChoiceField(queryset=Base.Base_work.objects.all(), label='Типы работ')
     material_type = forms.ModelChoiceField(queryset=Base.Base_matherials.objects.all(), label='Основной материал')
 
