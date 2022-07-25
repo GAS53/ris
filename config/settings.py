@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import os
 from urllib.request import CacheFTPHandler
 from django.urls import reverse_lazy
@@ -178,4 +176,3 @@ CACHE_ON = False
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
->>>>>>> index_work
